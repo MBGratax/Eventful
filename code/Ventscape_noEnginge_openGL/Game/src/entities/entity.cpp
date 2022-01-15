@@ -5,10 +5,14 @@
 
 namespace gl3{
 
-    entity::entity(shader shader, mesh mesh, glm::vec3 position, float zRotation, float scale, glm::vec4 color) :
-    myShader(std::move(shader)), myMesh(std::move(mesh)), position(position), zRotation(zRotation), scale(scale), color(color) {};
+    entity::entity(shader shader, mesh mesh, glm::vec3 position, float zRotation, float scale, glm::vec4 color, b2Body *body) :
+    myShader(std::move(shader)), myMesh(std::move(mesh)), position(position), zRotation(zRotation), scale(scale), color(color), body(body) {};
 
     void entity::draw(game *game) {
+
+        auto physicPosition = body->GetPosition();
+        getPosition().x = physicPosition.x;
+        getPosition().y = physicPosition.y;
 
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(position.x, position.y, position.z));

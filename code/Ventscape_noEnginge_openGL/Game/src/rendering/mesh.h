@@ -14,13 +14,11 @@ namespace gl3{
 
     class mesh {
     public:
-        //mesh::mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &indices);
-        mesh(const std::filesystem::path &gltfAssetPath, int meshIndex = 0);
+        explicit mesh(const std::filesystem::path &gltfAssetPath, int meshIndex = 0);
 
         // delete copy constructor
         mesh(const mesh &other) = delete;
 
-        // explicit move constructor
         mesh(mesh &&other) noexcept {
             std::swap(this->buffers, other.buffers);
             std::swap(this->primitives, other.primitives);
@@ -31,11 +29,9 @@ namespace gl3{
 
         ~mesh();
     private:
-
-        unsigned int VAO = 0;
         std::map<int, unsigned int> buffers;
-        std::map<std::string, unsigned int> vaa = {{"POSITION", 0},
-                                                   {"NORMAL",   1}};
+        std::map<std::string, unsigned int> vaa = {{"POSITION", 0}, {"NORMAL", 1}};
+        unsigned int VAO = 0;
         std::vector<primitive> primitives;
     };
 }

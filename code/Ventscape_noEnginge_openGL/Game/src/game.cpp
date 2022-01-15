@@ -4,8 +4,9 @@
 
 namespace gl3{
 
+    //ToDo init physics world
     game::game(fs::path assetRoot, float width, float height, const char* title) :
-                        assetRoot(std::move(assetRoot)){
+            assetRoot(std::move(assetRoot)), physicsWorld({0.0f, 0.0f}){
 
         viewPortWidth = width;
         viewPortHeight = height;
@@ -38,7 +39,7 @@ namespace gl3{
         std::cout << "gpu: " << glGetString(GL_RENDERER) << std::endl
                   << "opengl version: " << glGetString(GL_VERSION) << std::endl;
 
-       glEnable(GL_DEPTH_TEST);
+        glEnable(GL_DEPTH_TEST);
 
         if (glGetError() != GL_NO_ERROR) {
             throw std::runtime_error("gl error");
@@ -48,7 +49,16 @@ namespace gl3{
         glfwSetTime(1.0 / 60);
 
         audio.init();
-        audio.setGlobalVolume(0.05f);
+        audio.setGlobalVolume(0.1f);
+
+        //ToDo: add ground
+        b2BodyDef groundBodyDef;
+        groundBodyDef.position.Set(-50.0f, -10.0f);
+        groundBody = physicsWorld.CreateBody(&groundBodyDef);
+
+        b2PolygonShape groundBox;
+        groundBox.SetAsBox(100.0f, 1.0f);
+        groundBody->CreateFixture(&groundBox, 0.0f);
     }
 
     game::~game() {
@@ -57,38 +67,36 @@ namespace gl3{
 
     void game::run() {
 
-        auto s = std::make_unique<ship>(this);
-        spaceShip = s.get();
-        entities.push_back(std::move(s));
+        //b2Vec2 physicsPosShip(0.0f, 0.0f);
+        //auto s = std::make_unique<ship>(this, physicsPosShip);
+        //spaceShip = s.get();
+        //entities.push_back(std::move(s));
 
-        for(int i = 0; i <100; i++){
-            auto e = std::make_unique<planet>(this);
-            e->getPosition() = 500.0f * glm::vec3((rand() / (float) RAND_MAX - 0.5f) * cos(glm::radians(33.0f)) * i/10 , (rand() / (float) RAND_MAX - 0.5f) * sin(glm::radians(33.0f)) * i/10, 0);
-            e->getScale() = 2.0f * rand() / (float) RAND_MAX - 0.5f;
-            entities.push_back(std::move(e));
-        }
+        // Generate planets
+        //for(int i = 0; i <100; i++){
+        //    //ToDo: init physic body
+        //    auto initPos = 100.0f * glm::vec3((rand() / (float) RAND_MAX - 0.5f) * cos(glm::radians(33.0f)) * i/10 , (rand() / (float) RAND_MAX - 0.5f) * sin(glm::radians(33.0f)) * i/10, 0);
+        //    b2Vec2 physicsPos = {initPos.x, initPos.y};
+        //    auto e = std::make_unique<planet>(this, physicsPos);
+        //    e->getPosition() = initPos;
+        //    e->getScale() = 2.0f * rand() / (float) RAND_MAX - 0.5f;
+        //    entities.push_back(std::move(e));
+        //}
 
-        for(int i = 0; i <10; i++){
-            auto e = std::make_unique<enemy>(this);
-            e->getPosition() = 1000.0f * glm::vec3((rand() / (float) RAND_MAX - 0.5f) * cos(glm::radians(33.0f)) * i/100 , (rand() / (float) RAND_MAX - 0.5f) * sin(glm::radians(33.0f)) * i/100, 0);
-            e->getScale() = 5.0f * rand() / (float) RAND_MAX - 0.5f;
-            entities.push_back(std::move(e));
-        }
-
-        backgroundSound = std::make_unique<SoLoud::Wav>();
-        backgroundSound->load(resolve("audio/electronic-wave.mp3").string().c_str());
-        backgroundSound->setLooping(true);
-        audio.playBackground(*backgroundSound);
+        // Play Background Sound
+        //backgroundSound = std::make_unique<SoLoud::Wav>();
+        //backgroundSound->load(resolve("audio/electronic-wave.mp3").string().c_str());
+        //backgroundSound->setLooping(true);
+        //audio.playBackground(*backgroundSound);
 
         // Update Loop
         while (!glfwWindowShouldClose(glfWwindow)) {
 
-            // Update frame time
-            frameTime = (float) glfwGetTime();
-            glfwSetTime(0);
-
             // Logic Update
             update();
+
+            //Physics Update
+            physics();
 
             // Rendering
             draw();
@@ -102,6 +110,9 @@ namespace gl3{
     }
 
     void game::update() {
+
+        frameTime = (float) glfwGetTime();
+
         // Logic update
         for(auto & e : entities){
             e->update(this, frameTime);
@@ -114,6 +125,13 @@ namespace gl3{
 
     }
 
+    void game::physics() {
+        const int32 velocityIterations = 6;
+        const int32 positionIterations = 2;
+        const float timeStep = 1.0f / 60.0f;
+        physicsWorld.Step(timeStep, velocityIterations, positionIterations);
+    }
+
     void game::draw() {
 
         // Adjust viewport to actual window/frame buffer, not necessary equal to window size (retina!)
@@ -122,21 +140,21 @@ namespace gl3{
         glViewport(0, 0, width, height);
 
         // Clear Render Buffer
-        glClearColor(0.133f, 0.184f, 0.243f, 1.0f);
+        glClearColor(0.172f, 0.243f, 0.313f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Setup shader transformations
-        view = glm::lookAt(glm::vec3(spaceShip->getPosition().x, spaceShip->getPosition().y, 95.0f),
-                           glm::vec3(spaceShip->getPosition().x, spaceShip->getPosition().y, 0.0f),
-                           glm::vec3(0.0f, 1.0f, 0.0f));
+        //view = glm::lookAt(glm::vec3(spaceShip->getPosition().x, spaceShip->getPosition().y, 15.0f),
+        //                   glm::vec3(spaceShip->getPosition().x, spaceShip->getPosition().y, 0.0f),
+        //                   glm::vec3(0.0f, 1.0f, 0.0f));
 
 
-        projection = glm::perspective(glm::radians(70.0f), viewPortWidth/viewPortHeight, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(15.0f), viewPortWidth/viewPortHeight, 0.1f, 100.0f);
 
         // Draw objects
-        for(auto & e : entities){
+        for(auto & e : entities) {
             e->draw(this);
-
         }
+
     }
 }

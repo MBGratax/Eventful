@@ -20,12 +20,11 @@ namespace gl3{
 
     unsigned int loadAndCompileShader(GLuint shaderType, const fs::path &shaderAssetPath){
 
-        auto shaderSource = readText(shaderAssetPath);
-        const char *shaderSourceRaw= shaderSource.c_str();
-
         unsigned int shader = glCreateShader(shaderType);
+        auto shaderSrc = readText(shaderAssetPath);
+        const char* shaderSource = shaderSrc.c_str();
 
-        glShaderSource(shader, 1, &shaderSourceRaw, nullptr);
+        glShaderSource(shader, 1, &shaderSource, nullptr);
         glCompileShader(shader);
 
         {
@@ -68,6 +67,7 @@ namespace gl3{
         glDetachShader(shaderProgram, vertexShader);
         glDetachShader(shaderProgram, fragmentShader);
     }
+
 
     void shader::use() const {
         glUseProgram(shaderProgram);

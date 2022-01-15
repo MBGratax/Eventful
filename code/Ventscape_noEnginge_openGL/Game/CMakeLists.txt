@@ -8,7 +8,7 @@ add_executable(${EXE_FILE} ${SOURCE_FILES})
 
 target_compile_features(${EXE_FILE} PRIVATE cxx_std_17)
 
-target_link_libraries(${EXE_FILE} PRIVATE glad glfw glm soloud tinygltf)
+target_link_libraries(${EXE_FILE} PRIVATE glad glfw glm soloud tinygltf box2d)
 
 target_compile_definitions(${EXE_FILE} PRIVATE DEBUG_ASSET_ROOT=${PROJECT_SOURCE_DIR})
 

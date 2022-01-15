@@ -1,5 +1,6 @@
 #include "mesh.h"
 #include "../game.h"
+
 #include <tiny_gltf/tiny_gltf.h>
 
 #define OFFSET(index) (void*)(index)
@@ -15,6 +16,7 @@ namespace gl3{
 
         return buffer;
     }
+
 
     tinygltf::Model loadGltf(const std::filesystem::path &gltfAssetPath) {
         tinygltf::TinyGLTF loader;
@@ -86,14 +88,14 @@ namespace gl3{
                     size = accessor.type;
                 }
 
-                const auto &result = vaa.find(attrib.first);
+                const auto &result = vaa.find(attrib.first); // map.find tries to find a POSITION vector
                 if (result != vaa.end()) {
                     glEnableVertexAttribArray(result->second);
                     glVertexAttribPointer(result->second, size, accessor.componentType,
                                           accessor.normalized ? GL_TRUE : GL_FALSE,
                                           byteStride, OFFSET(accessor.byteOffset));
                 } else {
-                    std::cerr << "[mesh] unsupported VAA: " << attrib.first << std::endl;
+                    //std::cerr << "[mesh] unsupported VAA: " << attrib.first << std::endl;
                 }
             }
 
@@ -108,6 +110,7 @@ namespace gl3{
         }
     }
 
+
     void mesh::draw() const {
         glBindVertexArray(VAO);
         for (auto &primitive : primitives) {
@@ -115,6 +118,7 @@ namespace gl3{
         }
         glBindVertexArray(0);
     }
+
 
     mesh::~mesh() {
         for (auto &entry : buffers) {
