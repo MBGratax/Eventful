@@ -4,7 +4,7 @@
 #include "../rendering/mesh.h"
 #include <box2d/box2d.h>
 
-namespace gl3 {
+namespace Ventgame {
 
     class entity {
     public:

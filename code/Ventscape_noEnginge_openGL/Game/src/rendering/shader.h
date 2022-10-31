@@ -10,7 +10,7 @@
 #include <iostream>
 #include <filesystem>
 
-namespace gl3 {
+namespace Ventgame {
     class game;
     namespace fs = std::filesystem;
 

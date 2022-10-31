@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 
-set(SOURCE_FILES src/main.cpp src/rendering/shader.cpp src/rendering/shader.h src/rendering/mesh.cpp src/rendering/mesh.h src/entities/entity.cpp src/entities/entity.h src/game.cpp src/game.h)
+set(SOURCE_FILES src/main.cpp src/rendering/shader.cpp src/rendering/shader.h src/rendering/mesh.cpp src/rendering/mesh.h src/entities/entity.cpp src/entities/entity.h src/game.cpp src/game.h src/physics/listner.cpp src/physics/listner.h)
 
 set(EXE_FILE Ventscape)
 

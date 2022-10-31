@@ -19,7 +19,7 @@ int main(){
 
         assetPath = fs::canonical(assetPath).make_preferred();
 
-        gl3::game spaceBattle(assetPath, W_WIDTH, W_HEIGHT, W_TITLE);
+        Ventgame::game spaceBattle(assetPath, W_WIDTH, W_HEIGHT, W_TITLE);
         spaceBattle.run();
     } catch (const std::exception &e) {
         std::cerr << "Unhandled exception: " << e.what() << std::endl;

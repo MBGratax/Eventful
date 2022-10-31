@@ -3,7 +3,7 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-namespace gl3{
+namespace Ventgame{
 
     std::string readText(const std::filesystem::path &fileName) {
         std::ifstream sourceFile(fileName);

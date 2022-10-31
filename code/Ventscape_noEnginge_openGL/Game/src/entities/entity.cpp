@@ -3,7 +3,7 @@
 #include <string>
 #include <glm/gtx/transform.hpp>
 
-namespace gl3{
+namespace Ventgame{
 
     entity::entity(shader shader, mesh mesh, glm::vec3 position, float zRotation, float scale, glm::vec4 color, b2Body *body) :
     myShader(std::move(shader)), myMesh(std::move(mesh)), position(position), zRotation(zRotation), scale(scale), color(color), body(body) {};

@@ -2,7 +2,7 @@
 
 #include <glm/gtx/transform.hpp>
 
-namespace gl3{
+namespace Ventgame{
 
     //ToDo init physics world
     game::game(fs::path assetRoot, float width, float height, const char* title) :

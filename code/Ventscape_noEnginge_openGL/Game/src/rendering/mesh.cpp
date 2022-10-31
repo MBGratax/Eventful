@@ -5,7 +5,7 @@
 
 #define OFFSET(index) (void*)(index)
 
-namespace gl3{
+namespace Ventgame{
 
     template <typename T>
     GLuint createBuffer(GLuint bufferType, const std::vector<T> &bufferData){

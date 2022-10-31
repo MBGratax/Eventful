@@ -19,7 +19,7 @@
 
 #include "entities/entity.h"
 
-namespace gl3{
+namespace Ventgame{
     namespace fs = std::filesystem;
 
     class game {

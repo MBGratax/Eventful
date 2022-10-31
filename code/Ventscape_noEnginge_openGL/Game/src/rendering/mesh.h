@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <map>
 
-namespace gl3{
+namespace Ventgame{
 
     struct primitive {
         int mode;
