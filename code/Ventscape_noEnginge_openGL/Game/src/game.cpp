@@ -48,8 +48,8 @@ namespace Ventgame{
         // Frame time (initialize to sane values)
         glfwSetTime(1.0 / 60);
 
-        audio.init();
-        audio.setGlobalVolume(0.1f);
+//        audio.init();
+//        audio.setGlobalVolume(0.1f);
 
         //ToDo: add ground
         b2BodyDef groundBodyDef;

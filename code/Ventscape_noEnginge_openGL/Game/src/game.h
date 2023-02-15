@@ -12,8 +12,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <soloud.h>
-#include <soloud_wav.h>
+//#include <soloud.h>
+//#include <soloud_wav.h>
 
 #include <box2d/box2d.h>
 
@@ -39,7 +39,7 @@ namespace Ventgame{
             return fs::canonical((assetRoot / relativeAssetPath).make_preferred());
         }
 
-        auto &getAudio(){return audio;}
+        //auto &getAudio(){return audio;}
 
         auto &getPhysicsWorld() {return physicsWorld;}
 
@@ -60,8 +60,8 @@ namespace Ventgame{
 
         std::filesystem::path assetRoot;
 
-        SoLoud::Soloud audio;
-        std::unique_ptr<SoLoud::Wav> backgroundSound;
+//        SoLoud::Soloud audio;
+//        std::unique_ptr<SoLoud::Wav> backgroundSound;
 
         b2World physicsWorld;
         b2Body *groundBody = nullptr;

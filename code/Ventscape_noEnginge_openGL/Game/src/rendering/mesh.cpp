@@ -1,7 +1,7 @@
 #include "mesh.h"
 #include "../game.h"
+#include "tiny_gltf.h"
 
-#include <tiny_gltf/tiny_gltf.h>
 
 #define OFFSET(index) (void*)(index)
 
@@ -28,7 +28,7 @@ namespace Ventgame{
         if (gltfAssetPath.extension().string() == ".glb") {
             res = loader.LoadBinaryFromFile(&model, &err, &warn, gltfAssetPath.string());
         } else {
-            res = loader.LoadASCIIFromFile(&model, &err, &warn, gltfAssetPath.string());
+            res = loader.LoadASCIIFromFile(&model,&err,&warn,gltfAssetPath.string());
         }
 
         if (!warn.empty()) {
@@ -40,7 +40,7 @@ namespace Ventgame{
         }
 
         if (!res) {
-            throw std::runtime_error("[tinyglt] failed to load glTF: " + gltfAssetPath.string());
+            throw std::runtime_error("[tinygltf] failed to load glTF: " + gltfAssetPath.string());
         }
 
         return std::move(model);

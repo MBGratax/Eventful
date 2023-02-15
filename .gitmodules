@@ -1,12 +1,3 @@
-[submodule "code/Ventscape_noEnginge_openGL/Extern/glm"]
-	path = code/Ventscape_noEnginge_openGL/Extern/glm
-	url = https://github.com/g-truc/glm.git
-	shallow = true
-[submodule "code/Ventscape_noEnginge_openGL/Extern/glfw"]
-	path = code/Ventscape_noEnginge_openGL/Extern/glfw
-	url = https://github.com/glfw/glfw.git
-	shallow = true
-[submodule "code/Ventscape_noEnginge_openGL/Extern/box2d"]
-	path = code/Ventscape_noEnginge_openGL/Extern/box2d
-	url = https://github.com/erincatto/box2d.git
-	shallow = true
+[submodule "code\\Ventscape_noEnginge_openGL\\Extern\\vcpkg"]
+	path = code\\Ventscape_noEnginge_openGL\\Extern\\vcpkg
+	url = https://github.com/Microsoft/vcpkg.git

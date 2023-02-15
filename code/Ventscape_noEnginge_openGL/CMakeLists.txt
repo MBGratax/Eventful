@@ -1,12 +1,9 @@
 ﻿cmake_minimum_required(VERSION 3.18)
-project(Ventscape_noEngine_openGL)
 
-add_subdirectory(Extern/glad)
-add_subdirectory(Extern/glfw)
-add_subdirectory(Extern/glm)
-add_subdirectory(Extern/tinygltf)
-add_subdirectory(Extern/soloud)
-add_subdirectory(Extern/box2d)
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/Extern/vcpkg/scripts/buildsystems/vcpkg.cmake
+        CACHE STRING "Vcpkg toolchain file")
+
+project(Ventscape_noEngine_openGL)
 
 add_subdirectory(game)
 
