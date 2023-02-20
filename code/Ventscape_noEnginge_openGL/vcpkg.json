@@ -8,6 +8,7 @@
     "tinygltf",
     "glm",
     "glfw3",
-    "box2d"
+    "box2d",
+    "spdlog"
   ]
 }
