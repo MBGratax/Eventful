@@ -20,8 +20,7 @@ namespace Ventgame{
 
         return buffer;
     }
-
-
+    
     tinygltf::Model loadGltf(const std::filesystem::path &gltfAssetPath) {
         tinygltf::TinyGLTF loader;
         tinygltf::Model model;
@@ -47,7 +46,7 @@ namespace Ventgame{
             throw std::runtime_error("[tinygltf] failed to load glTF: " + gltfAssetPath.string());
         }
 
-        return std::move(model);
+        return model;
     }
 
 
@@ -82,8 +81,8 @@ namespace Ventgame{
         const auto &mesh = model.meshes[meshIndex];
         for (const auto &primitive : mesh.primitives) {
             const auto &indexAccessor = model.accessors[primitive.indices];
-            for (const auto &attrib : primitive.attributes) {
-                tinygltf::Accessor accessor = model.accessors[attrib.second];
+            for (const auto& [name, value] : primitive.attributes) {
+                tinygltf::Accessor accessor = model.accessors[value];
                 int byteStride = accessor.ByteStride(model.bufferViews[accessor.bufferView]);
                 glBindBuffer(GL_ARRAY_BUFFER, vbos[accessor.bufferView]);
 
@@ -92,14 +91,14 @@ namespace Ventgame{
                     size = accessor.type;
                 }
 
-                const auto &result = vaa.find(attrib.first); // map.find tries to find a POSITION vector
+                const auto &result = vaa.find(name); // map.find tries to find a POSITION vector
                 if (result != vaa.end()) {
                     glEnableVertexAttribArray(result->second);
                     glVertexAttribPointer(result->second, size, accessor.componentType,
                                           accessor.normalized ? GL_TRUE : GL_FALSE,
                                           byteStride, OFFSET(accessor.byteOffset));
                 } else {
-                    //std::cerr << "[mesh] unsupported VAA: " << attrib.first << std::endl;
+                    std::cerr << "[mesh] unsupported VAA: " << name << std::endl;
                 }
             }
 
@@ -108,9 +107,9 @@ namespace Ventgame{
         }
 
         glBindVertexArray(0);
-        for (auto &entry : vbos) {
-            glDeleteBuffers(1, &entry.second);
-            entry.second = 0;
+        for (auto& [key, value] : vbos) {
+            glDeleteBuffers(1, &value);
+            value = 0;
         }
     }
 
@@ -125,9 +124,9 @@ namespace Ventgame{
 
 
     mesh::~mesh() {
-        for (auto &entry : buffers) {
-            glDeleteBuffers(1, &entry.second);
-            entry.second = 0;
+        for (auto& [key, value] : buffers) {
+            glDeleteBuffers(1, &value);
+            value = 0;
         }
         glDeleteVertexArrays(1, &VAO);
         VAO = 0;

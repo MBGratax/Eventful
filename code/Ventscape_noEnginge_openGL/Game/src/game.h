@@ -24,7 +24,7 @@ namespace Ventgame{
 
     class game {
     public:
-        explicit game(fs::path assetRoot = "./assets", float width = 800.0f, float height = 600.0f, const char* title = "GameLabIII");
+        explicit game(fs::path assetRoot = "./assets", int width = 800, int height = 600, const char* title = "GameLabIII");
 
         ~game();
 
@@ -49,12 +49,12 @@ namespace Ventgame{
         void draw();
 
         GLFWwindow *glfWwindow = nullptr;
-        float frameTime = 1.0 / 60.0;
+        float frameTime = 1.0f / 60.0f;
 
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
-        float viewPortWidth = 0;
-        float viewPortHeight = 0;
+        int viewPortWidth = 0;
+        int viewPortHeight = 0;
 
         std::vector<std::unique_ptr<entity>> entities;
 
@@ -63,7 +63,7 @@ namespace Ventgame{
 //        SoLoud::Soloud audio;
 //        std::unique_ptr<SoLoud::Wav> backgroundSound;
 
-        b2World physicsWorld;
+        b2World physicsWorld = b2World({0.0f, 0.0f});
         b2Body *groundBody = nullptr;
 
     };

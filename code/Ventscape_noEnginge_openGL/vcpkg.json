@@ -3,12 +3,10 @@
   "version-string": "0.0.1",
   "dependencies": [
     "glad",
-    "fmt",
     "portaudio",
     "tinygltf",
     "glm",
     "glfw3",
-    "box2d",
-    "spdlog"
+    "box2d"
   ]
 }

@@ -5,11 +5,8 @@
 namespace Ventgame{
 
     //ToDo init physics world
-    game::game(fs::path assetRoot, float width, float height, const char* title) :
-            assetRoot(std::move(assetRoot)), physicsWorld({0.0f, 0.0f}){
-
-        viewPortWidth = width;
-        viewPortHeight = height;
+    game::game(fs::path assetRoot, int width, int height, const char* title) :
+            assetRoot(std::move(assetRoot)), viewPortWidth(width), viewPortHeight(height){
 
         if(!glfwInit()){
             throw std::runtime_error("Failed to initialize GLFW");
@@ -114,7 +111,7 @@ namespace Ventgame{
         frameTime = (float) glfwGetTime();
 
         // Logic update
-        for(auto & e : entities){
+        for(const auto & e : entities){
             e->update(this, frameTime);
         }
 
@@ -135,7 +132,8 @@ namespace Ventgame{
     void game::draw() {
 
         // Adjust viewport to actual window/frame buffer, not necessary equal to window size (retina!)
-        int width, height;
+        int width;
+        int height;
         glfwGetFramebufferSize(glfWwindow, &width, &height);
         glViewport(0, 0, width, height);
 
@@ -152,7 +150,7 @@ namespace Ventgame{
         projection = glm::perspective(glm::radians(15.0f), viewPortWidth/viewPortHeight, 0.1f, 100.0f);
 
         // Draw objects
-        for(auto & e : entities) {
+        for(const auto & e : entities) {
             e->draw(this);
         }
 

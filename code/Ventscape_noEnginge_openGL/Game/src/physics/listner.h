@@ -6,10 +6,10 @@
 namespace physics {
     class listner : public b2ContactListener {
 
-        void BeginContact(b2Contact* contact);
-        void EndContact(b2Contact* contact);
-        void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
-        void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+        void BeginContact(b2Contact* contact) override;
+        void EndContact(b2Contact* contact) override;
+        void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) override;
+        void PreSolve(b2Contact* contact, const b2Manifold* oldManifold) override;
 
     };
 }
