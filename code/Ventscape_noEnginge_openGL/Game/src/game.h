@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <iostream>
 #include <vector>
+#include <array>
 
 #include <windows.h>
 
@@ -11,9 +12,6 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-//#include <soloud.h>
-//#include <soloud_wav.h>
 
 #include <box2d/box2d.h>
 
@@ -39,7 +37,6 @@ namespace Ventgame{
             return fs::canonical((assetRoot / relativeAssetPath).make_preferred());
         }
 
-        //auto &getAudio(){return audio;}
 
         auto &getPhysicsWorld() {return physicsWorld;}
 
@@ -59,9 +56,6 @@ namespace Ventgame{
         std::vector<std::unique_ptr<entity>> entities;
 
         std::filesystem::path assetRoot;
-
-//        SoLoud::Soloud audio;
-//        std::unique_ptr<SoLoud::Wav> backgroundSound;
 
         b2World physicsWorld = b2World({0.0f, 0.0f});
         b2Body *groundBody = nullptr;

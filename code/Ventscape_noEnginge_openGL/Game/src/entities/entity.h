@@ -13,12 +13,12 @@ namespace Ventgame {
                glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
                float zRotation = 0.0f,
                float scale = 1.0f,
-               glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f),
+               const glm::vec4& color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f),
                b2Body *body = nullptr);
 
         virtual ~entity() = default;
 
-        virtual void update(game *game, float frameTime) {};
+        virtual void update(game *game, float frameTime) = 0;
 
         virtual void draw(game *game);
 

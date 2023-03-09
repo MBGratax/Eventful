@@ -6,7 +6,7 @@ namespace Ventgame{
 
     //ToDo init physics world
     game::game(fs::path assetRoot, int width, int height, const char* title) :
-            assetRoot(std::move(assetRoot)), viewPortWidth(width), viewPortHeight(height){
+            viewPortWidth(width), viewPortHeight(height),assetRoot(std::move(assetRoot)){
 
         if(!glfwInit()){
             throw std::runtime_error("Failed to initialize GLFW");
@@ -24,6 +24,8 @@ namespace Ventgame{
             glfwTerminate();
             throw std::runtime_error("failed to create window");
         }
+
+        //TODO load and add window icons
 
         // Enable sticky keys to not miss key events
         glfwSetInputMode(glfWwindow, GLFW_STICKY_KEYS, GLFW_TRUE);
@@ -44,9 +46,6 @@ namespace Ventgame{
 
         // Frame time (initialize to sane values)
         glfwSetTime(1.0 / 60);
-
-//        audio.init();
-//        audio.setGlobalVolume(0.1f);
 
         //ToDo: add ground
         b2BodyDef groundBodyDef;
@@ -79,12 +78,6 @@ namespace Ventgame{
         //    e->getScale() = 2.0f * rand() / (float) RAND_MAX - 0.5f;
         //    entities.push_back(std::move(e));
         //}
-
-        // Play Background Sound
-        //backgroundSound = std::make_unique<SoLoud::Wav>();
-        //backgroundSound->load(resolve("audio/electronic-wave.mp3").string().c_str());
-        //backgroundSound->setLooping(true);
-        //audio.playBackground(*backgroundSound);
 
         // Update Loop
         while (!glfwWindowShouldClose(glfWwindow)) {
@@ -147,7 +140,7 @@ namespace Ventgame{
         //                   glm::vec3(0.0f, 1.0f, 0.0f));
 
 
-        projection = glm::perspective(glm::radians(15.0f), viewPortWidth/viewPortHeight, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(15.0f), (float)viewPortWidth/(float)viewPortHeight, 0.1f, 100.0f);
 
         // Draw objects
         for(const auto & e : entities) {

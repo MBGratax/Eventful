@@ -30,7 +30,7 @@ namespace Ventgame{
         ~mesh();
     private:
         std::map<int, unsigned int> buffers;
-        std::map<std::string, unsigned int> vaa = {{"POSITION", 0}, {"NORMAL", 1}};
+        std::map<std::string, unsigned int, std::equal_to<>> vaa = {{"POSITION", 0}, {"NORMAL", 1}};
         unsigned int VAO = 0;
         std::vector<primitive> primitives;
     };

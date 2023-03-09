@@ -2,14 +2,16 @@
 
 #include <box2d/box2d.h>
 
+namespace Ventgame::physics {
+        class listner : public b2ContactListener {
 
-namespace physics {
-    class listner : public b2ContactListener {
+            void BeginContact(b2Contact *contact) override;
 
-        void BeginContact(b2Contact* contact) override;
-        void EndContact(b2Contact* contact) override;
-        void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) override;
-        void PreSolve(b2Contact* contact, const b2Manifold* oldManifold) override;
+            void EndContact(b2Contact *contact) override;
 
-    };
-}
+            void PostSolve(b2Contact *contact, const b2ContactImpulse *impulse) override;
+
+            void PreSolve(b2Contact *contact, const b2Manifold *oldManifold) override;
+
+        };
+    }

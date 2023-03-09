@@ -11,7 +11,9 @@ set(SOURCE_FILES
         src/game.cpp
         src/game.h
         src/physics/listner.cpp
-        src/physics/listner.h)
+        src/physics/listner.h
+        src/physics/PhysicsWorld.cpp
+        src/physics/PhysicsWorld.h)
 
 set(EXE_FILE Ventscape)
 
