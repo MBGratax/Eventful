@@ -19,6 +19,8 @@ set(EXE_FILE Ventscape)
 
 add_executable(${EXE_FILE} ${SOURCE_FILES})
 
+target_compile_definitions(${EXE_FILE} PRIVATE $ENV{PREPROCESSORS})
+
 target_compile_features(${EXE_FILE} PRIVATE cxx_std_17)
 
 find_package(glfw3 CONFIG REQUIRED)
