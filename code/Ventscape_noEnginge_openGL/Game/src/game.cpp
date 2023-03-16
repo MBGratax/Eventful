@@ -1,4 +1,5 @@
 #include "game.h"
+#include "physics/PhysicsWorld.h"
 
 #include <glm/gtx/transform.hpp>
 
@@ -47,10 +48,10 @@ namespace Ventgame{
         // Frame time (initialize to sane values)
         glfwSetTime(1.0 / 60);
 
-        //ToDo: add ground
+        physics::PhysicsWorld *LphysicsWorld = physics::PhysicsWorld::GetInstance();
         b2BodyDef groundBodyDef;
         groundBodyDef.position.Set(-50.0f, -10.0f);
-        groundBody = physicsWorld.CreateBody(&groundBodyDef);
+        groundBody = LphysicsWorld->CreateBody(groundBodyDef);
 
         b2PolygonShape groundBox;
         groundBox.SetAsBox(100.0f, 1.0f);
