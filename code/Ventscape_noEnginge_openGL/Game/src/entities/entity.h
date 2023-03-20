@@ -16,15 +16,25 @@ namespace Ventgame {
                const glm::vec4& color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f),
                b2Body *body = nullptr);
 
-        virtual ~entity() = default;
+        virtual ~entity();
 
         virtual void update(game *game, float frameTime) = 0;
 
         virtual void draw(game *game);
 
-        glm::vec3 &getPosition() {return position;}
-        float &getScale() {return scale;}
-        glm::vec4 &getColor() {return color;}
+        virtual void startContact() {
+            //Comment to remove linting notification
+        };
+
+        [[nodiscard]] const glm::vec3 &getPosition() const {return position; }
+        [[nodiscard]] float getZRotation() const { return zRotation; }
+        [[nodiscard]] const glm::vec3 &getScale() const { return scale; }
+        [[nodiscard]] const glm::vec4 &getColor() const {return  color;}
+        void setPosition(const glm::vec3 &position) { entity::position = position; }
+        void setZRotation(float zRotation) { entity::zRotation = zRotation; }
+        void setScale(const glm::vec3 &scale) { entity::scale = scale; }
+        b2Body* &getBody(){return body;}
+
 
         void setXPos(float x) { position.x = x;}
         void setYPos(float y) { position.y = y;}
@@ -35,20 +45,15 @@ namespace Ventgame {
         float &getDeltaTime() {return deltaTime;}
         float &getLastFrame() {return lastFrame;}
 
-        auto &getBody() {return body;}
-
     private:
         glm::vec3 position;
         float zRotation;
-        float scale = 1.0f;
+        glm::vec3 scale;
         glm::vec4 color;
-
         shader myShader;
         mesh myMesh;
-
+        b2Body *body;
         float deltaTime = 0.0f;
         float lastFrame = 0.0f;
-
-        b2Body *body = nullptr;
     };
 }

@@ -13,7 +13,7 @@ set(SOURCE_FILES
         src/physics/listner.cpp
         src/physics/listner.h
         src/physics/PhysicsWorld.cpp
-        src/physics/PhysicsWorld.h)
+        src/physics/PhysicsWorld.h src/entities/PlayerCharacter.cpp src/entities/PlayerCharacter.h)
 
 set(EXE_FILE Ventscape)
 

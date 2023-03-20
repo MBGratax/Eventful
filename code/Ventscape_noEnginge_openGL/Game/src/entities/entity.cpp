@@ -11,8 +11,8 @@ namespace Ventgame{
     void entity::draw(game *game) {
 
         auto physicPosition = body->GetPosition();
-        getPosition().x = physicPosition.x;
-        getPosition().y = physicPosition.y;
+        position.x = physicPosition.x;
+        position.y = physicPosition.y;
 
         auto model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(position.x, position.y, position.z));
@@ -28,5 +28,9 @@ namespace Ventgame{
         myShader.setVector("color", color);
 
         myMesh.draw();
+    }
+
+    entity::~entity(){
+        body->GetWorld()->DestroyBody(body);
     }
 }

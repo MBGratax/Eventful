@@ -7,6 +7,7 @@
 
 #include <windows.h>
 
+#include <glm/glm.hpp>
 #include <glm/mat4x4.hpp>
 
 #include <glad/glad.h>
@@ -15,6 +16,7 @@
 #include <box2d/box2d.h>
 
 #include "entities/entity.h"
+#include "physics/PhysicsWorld.h"
 
 namespace Ventgame{
     namespace fs = std::filesystem;
@@ -41,7 +43,7 @@ namespace Ventgame{
 
     private:
         void update();
-        void physics();
+        void PhysicsUpdate();
         void draw();
 
         GLFWwindow *glfWwindow = nullptr;
@@ -56,7 +58,7 @@ namespace Ventgame{
 
         std::filesystem::path assetRoot;
 
-        b2World physicsWorld = b2World({0.0f, 0.0f});
+        physics::PhysicsWorld *physicsWorld = physics::PhysicsWorld::GetInstance();
         b2Body *groundBody = nullptr;
 
     };

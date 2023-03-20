@@ -1,11 +1,9 @@
 #include "game.h"
-#include "physics/PhysicsWorld.h"
 
 #include <glm/gtx/transform.hpp>
 
 namespace Ventgame{
 
-    //ToDo init physics world
     game::game(fs::path assetRoot, int width, int height, const char* title) :
             viewPortWidth(width), viewPortHeight(height),assetRoot(std::move(assetRoot)){
 
@@ -25,8 +23,14 @@ namespace Ventgame{
             glfwTerminate();
             throw std::runtime_error("failed to create window");
         }
+        glfwSetWindowSizeLimits(glfWwindow, 640, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
+        glfwSetWindowAspectRatio(glfWwindow, 16, 9);
 
-        //TODO load and add window icons
+        // Set Window Icons
+        std::array<std::string , 2> Licons;
+        Licons[0] = "a";
+        Licons[1] = "b";
+        glfwSetWindowIcon(glfWwindow, 0, nullptr);
 
         // Enable sticky keys to not miss key events
         glfwSetInputMode(glfWwindow, GLFW_STICKY_KEYS, GLFW_TRUE);
@@ -48,10 +52,10 @@ namespace Ventgame{
         // Frame time (initialize to sane values)
         glfwSetTime(1.0 / 60);
 
-        physics::PhysicsWorld *LphysicsWorld = physics::PhysicsWorld::GetInstance();
+        physicsWorld = physics::PhysicsWorld::GetInstance();
         b2BodyDef groundBodyDef;
         groundBodyDef.position.Set(-50.0f, -10.0f);
-        groundBody = LphysicsWorld->CreateBody(groundBodyDef);
+        groundBody = physicsWorld->CreateBody(groundBodyDef);
 
         b2PolygonShape groundBox;
         groundBox.SetAsBox(100.0f, 1.0f);
@@ -63,22 +67,7 @@ namespace Ventgame{
     }
 
     void game::run() {
-
-        //b2Vec2 physicsPosShip(0.0f, 0.0f);
-        //auto s = std::make_unique<ship>(this, physicsPosShip);
-        //spaceShip = s.get();
-        //entities.push_back(std::move(s));
-
-        // Generate planets
-        //for(int i = 0; i <100; i++){
-        //    //ToDo: init physic body
-        //    auto initPos = 100.0f * glm::vec3((rand() / (float) RAND_MAX - 0.5f) * cos(glm::radians(33.0f)) * i/10 , (rand() / (float) RAND_MAX - 0.5f) * sin(glm::radians(33.0f)) * i/10, 0);
-        //    b2Vec2 physicsPos = {initPos.x, initPos.y};
-        //    auto e = std::make_unique<planet>(this, physicsPos);
-        //    e->getPosition() = initPos;
-        //    e->getScale() = 2.0f * rand() / (float) RAND_MAX - 0.5f;
-        //    entities.push_back(std::move(e));
-        //}
+        // Init Game Objects and add them to entity vector
 
         // Update Loop
         while (!glfwWindowShouldClose(glfWwindow)) {
@@ -87,16 +76,16 @@ namespace Ventgame{
             update();
 
             //Physics Update
-            physics();
+            PhysicsUpdate();
 
             // Rendering
             draw();
 
-            // Poll for and process events
-            glfwPollEvents();
-
             // Swap front and back buffers
             glfwSwapBuffers(glfWwindow);
+
+            // Poll for and process events
+            glfwPollEvents();
         }
     }
 
@@ -116,11 +105,8 @@ namespace Ventgame{
 
     }
 
-    void game::physics() {
-        const int32 velocityIterations = 6;
-        const int32 positionIterations = 2;
-        const float timeStep = 1.0f / 60.0f;
-        physicsWorld.Step(timeStep, velocityIterations, positionIterations);
+    void game::PhysicsUpdate() {
+        physicsWorld->Step();
     }
 
     void game::draw() {
@@ -136,9 +122,9 @@ namespace Ventgame{
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Setup shader transformations
-        //view = glm::lookAt(glm::vec3(spaceShip->getPosition().x, spaceShip->getPosition().y, 15.0f),
-        //                   glm::vec3(spaceShip->getPosition().x, spaceShip->getPosition().y, 0.0f),
-        //                   glm::vec3(0.0f, 1.0f, 0.0f));
+        view = glm::lookAt(glm::vec3(0.0f, 0.0f, 15.0f),
+                           glm::vec3(0.0f, 0.0f, 0.0f),
+                           glm::vec3(0.0f, 1.0f, 0.0f));
 
 
         projection = glm::perspective(glm::radians(15.0f), (float)viewPortWidth/(float)viewPortHeight, 0.1f, 100.0f);
