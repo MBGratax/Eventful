@@ -4,7 +4,7 @@
 
 namespace Ventgame {
 
-    PlayerCharacter::PlayerCharacter(game *game, glm::vec3 position, float zRotation, float scale, glm::vec4 colour) : entity(
+    PlayerCharacter::PlayerCharacter(glm::vec3 position, float zRotation, float scale, glm::vec4 colour) : entity(
             shader("Shaders/vertexShader.glsl", "Shaders/fragmentShader.glsl"),
             mesh("Meshes"),
             position,
@@ -24,7 +24,7 @@ namespace Ventgame {
     }
 
     void PlayerCharacter::update(game *game, float deltaTime) {
-
+        entity::update(game,deltaTime);
     }
 
     b2Body *

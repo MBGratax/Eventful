@@ -7,7 +7,7 @@ namespace Ventgame {
     class PlayerCharacter : public entity {
 
     public:
-        explicit PlayerCharacter(game *game, glm::vec3 position = glm::vec3(0.0f,0.0f,0.0f),
+        explicit PlayerCharacter(glm::vec3 position = glm::vec3(0.0f,0.0f,0.0f),
                                  float zRotation = 0.0f,
                                  float scale = 1.0f,
                                  glm::vec4 colour = {1.0f,1.0f,1.0f,1.0f});
