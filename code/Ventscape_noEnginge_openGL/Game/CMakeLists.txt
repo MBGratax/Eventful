@@ -2,16 +2,16 @@ cmake_minimum_required(VERSION 3.23)
 
 set(SOURCE_FILES
         src/main.cpp
-        src/rendering/shader.cpp
-        src/rendering/shader.h
-        src/rendering/mesh.cpp
-        src/rendering/mesh.h
-        src/entities/entity.cpp
-        src/entities/entity.h
-        src/game.cpp
-        src/game.h
-        src/physics/listner.cpp
-        src/physics/listner.h
+        src/rendering/Shader.cpp
+        src/rendering/Shader.h
+        src/rendering/Mesh.cpp
+        src/rendering/Mesh.h
+        src/entities/Entity.cpp
+        src/entities/Entity.h
+        src/Game.cpp
+        src/Game.h
+        src/physics/Listner.cpp
+        src/physics/Listner.h
         src/physics/PhysicsWorld.cpp
         src/physics/PhysicsWorld.h src/entities/PlayerCharacter.cpp src/entities/PlayerCharacter.h)
 

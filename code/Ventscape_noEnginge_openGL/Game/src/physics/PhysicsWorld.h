@@ -1,9 +1,10 @@
 #pragma once
+
 #include <box2d/box2d.h>
 #include <memory>
-#include "listner.h"
+#include "Listner.h"
 
-namespace Ventgame::physics {
+namespace Ventgame::Physics {
     class PhysicsWorld {
     public:
 
@@ -13,9 +14,9 @@ namespace Ventgame::physics {
 
         static PhysicsWorld *GetInstance();
 
-        b2Body* CreateBody(const b2BodyDef& bodyDef);
+        b2Body *CreateBody(const b2BodyDef &bodyDef);
 
-        inline void Step(){b2->Step(timeStep, velocityIterations, positionIterations);}
+        inline void Step() { _b2->Step(_timeStep, _velocityIterations, _positionIterations); }
 
     protected:
 
@@ -23,13 +24,13 @@ namespace Ventgame::physics {
 
     private:
 
-        inline static PhysicsWorld *instance = nullptr;
-        std::unique_ptr<b2World> b2;
-        b2Vec2 gravity {0.0f, 0.0f};
-        listner listenerInstance;
-        int32_t velocityIterations = 10;
-        int32_t positionIterations = 8;
-        float timeStep = 1.0f/60.0f;
+        inline static PhysicsWorld *_instance = nullptr;
+        std::unique_ptr<b2World> _b2;
+        b2Vec2 _gravity{0.0f, 0.0f};
+        Listner _listenerInstance;
+        int32_t _velocityIterations = 10;
+        int32_t _positionIterations = 8;
+        float _timeStep = 1.0f / 60.0f;
 
     };
 }
