@@ -1,13 +1,12 @@
 
 #include "PlayerCharacter.h"
 #include "../Game.h"
-#include "Entity.h"
 
 namespace Ventgame {
 
     PlayerCharacter::PlayerCharacter(glm::vec3 position, float zRotation, float scale, glm::vec4 const &colour)
             : Entity(
-            Shader("Shaders/vertexShader.glsl", "Shaders/fragmentShader.glsl"),
+            Shader("Shaders/FlatcolourVertexShader.glsl", "Shaders/FlatColourFragmentShader.glsl"),
             Mesh("Meshes"),
             position,
             zRotation,
@@ -26,6 +25,11 @@ namespace Ventgame {
     }
 
     void PlayerCharacter::Update(Game *game, float deltaTime) {
+        /* TODO: Make player move upwards based on difficulty
+         * TODO: Make player jump based on button press duration
+         * TODO: Make player change gravity based on button press
+         * TODO: Make player attack based on button press
+         */
     }
 
     b2Body *
