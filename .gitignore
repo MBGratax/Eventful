@@ -13,3 +13,6 @@
 *.swp
 *.idea
 /.idea
+!builds
+builds/*
+!builds/*.zip

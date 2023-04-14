@@ -42,3 +42,23 @@ target_link_libraries(${EXE_FILE}
         PRIVATE box2d::box2d)
 
 target_compile_definitions(${EXE_FILE} PRIVATE DEBUG_ASSET_ROOT=${PROJECT_SOURCE_DIR})
+
+install(TARGETS ${EXE_FILE}
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib/static)
+
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/Assets DESTINATION Assets)
+
+install(IMPORTED_RUNTIME_ARTIFACTS glfw portaudio
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib)
+
+set(LIBS $<TARGET_FILE:glad::glad> $<TARGET_FILE:box2d::box2d>)
+
+install(FILES ${LIBS} DESTINATION lib)
+
+
+
+
+

@@ -12,12 +12,13 @@
       "hidden": true,
       "description": "Default build using Ninja generator",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/cmake-build-${presetName}",
+      "binaryDir": "${sourceDir}/Ventscape-${presetName}",
+      "installDir": "${sourceDir}/../../builds/Ventscape-${presetName}",
       "toolchainFile": "${sourceDir}/Extern/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "cacheVariables": {
       },
       "environment": {
-        "CMAKE_BUILD_PARALLEL_LEVEL": "6",
+        "CMAKE_BUILD_PARALLEL_LEVEL": "8",
         "CXX_STANDARD": "17"
       },
       "vendor": {
@@ -43,6 +44,7 @@
       "displayName": "Release Config",
       "description": "Release build using Ninja generator",
       "inherits": "Default",
+      "installDir": "${sourceDir}/../../builds/Ventscape",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "MinSizeRel"
       },
@@ -61,6 +63,43 @@
       "environment": {
         "PREPROCESSORS": "LOGS_ENABLED=1;"
       }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "Default",
+      "displayName": "Default Build",
+      "hidden": true,
+      "description": "Default build using Ninja generator",
+      "configurePreset": "Default",
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "Visual Studio"
+        }
+      },
+      "jobs": 8,
+      "cleanFirst": true
+    },
+    {
+      "name": "Debug",
+      "displayName": "Debug Build",
+      "description": "Debug build using Ninja generator",
+      "inherits": "Default",
+      "configurePreset": "Debug"
+    },
+    {
+      "name": "Release",
+      "displayName": "Release Build",
+      "description": "Release build using Ninja generator",
+      "inherits": "Default",
+      "configurePreset": "Release"
+    },
+    {
+      "name": "ReleaseWithLogs",
+      "displayName": "RelWithDebugInfo Build",
+      "description": "Release build with logs using Ninja generator",
+      "inherits": "Default",
+      "configurePreset": "ReleaseWithLogs"
     }
   ]
 }
