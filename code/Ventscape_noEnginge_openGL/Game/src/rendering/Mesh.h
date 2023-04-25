@@ -23,16 +23,19 @@ namespace Ventgame {
             std::swap(this->_buffers, other._buffers);
             std::swap(this->_primitives, other._primitives);
             std::swap(this->_vao, other._vao);
+            std::swap(this->_vaa, other._vaa);
         }
 
         void Draw() const;
 
-        ~Mesh();
+        virtual ~Mesh();
 
     private:
         std::map<int, unsigned int> _buffers;
-        std::map<std::string, unsigned int, std::equal_to<>> vaa = {{"POSITION", 0},
-                                                                    {"NORMAL",   1}};
+        std::map<std::string, unsigned int> _vaa = {
+                {"POSITION", 0},
+                {"NORMAL",   1}
+        };
         unsigned int _vao = 0;
         std::vector<SPrimitive> _primitives;
     };

@@ -42,5 +42,9 @@ namespace Ventgame {
         unsigned int _shaderProgram = 0;
         unsigned int _vertexShader = 0;
         unsigned int _fragmentShader = 0;
+
+        unsigned int LoadAndCompileShader(unsigned int shaderType, const fs::path &shaderAssetPath);
+
+        std::string ReadText(const std::filesystem::path &fileName);
     };
 }

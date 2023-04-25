@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "entities/PlayerCharacter.h"
 
 #include <glm/gtx/transform.hpp>
 
@@ -68,7 +69,7 @@ namespace Ventgame {
 
     void Game::Run() {
         // Init Game Objects and add them to entity vector
-
+        _entities.push_back(std::make_unique<PlayerCharacter>(glm::vec3(0, 0, 0), 0, 1, glm::vec4(1, 0, 0, 1)));
         // Update Loop
         while (!glfwWindowShouldClose(_glfWwindow)) {
 

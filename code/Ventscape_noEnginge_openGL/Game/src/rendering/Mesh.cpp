@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include "../Game.h"
+#include "../Asset.h"
 
 #define TINYGLTF_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
@@ -53,7 +54,7 @@ namespace Ventgame {
 
 
     Mesh::Mesh(const std::filesystem::path &gltfAssetPath, int meshIndex) {
-        auto l_model = loadGltf(gltfAssetPath);
+        auto l_model = loadGltf(resolveAssetPath(gltfAssetPath));
 
         if (l_model.meshes.size() <= meshIndex) {
             throw std::runtime_error("[mesh] model does not contain requested mesh: " + gltfAssetPath.string());
@@ -62,7 +63,6 @@ namespace Ventgame {
         glGenVertexArrays(1, &_vao);
         glBindVertexArray(_vao);
 
-        std::map<int, unsigned int> l_vbos;
         for (size_t l_i = 0; l_i < l_model.bufferViews.size(); ++l_i) {
             const auto &l_bufferView = l_model.bufferViews[l_i];
             const auto &l_buffer = l_model.buffers[l_bufferView.buffer];
@@ -74,7 +74,7 @@ namespace Ventgame {
 
             GLuint l_vbo;
             glGenBuffers(1, &l_vbo);
-            l_vbos[l_i] = l_vbo;
+            _buffers[l_i] = l_vbo;
             glBindBuffer(l_bufferView.target, l_vbo);
             glBufferData(l_bufferView.target, l_bufferView.byteLength, &l_buffer.data.at(0) + l_bufferView.byteOffset,
                          GL_STATIC_DRAW);
@@ -86,21 +86,21 @@ namespace Ventgame {
             for (const auto &[l_name, l_value]: l_primitive.attributes) {
                 tinygltf::Accessor l_accessor = l_model.accessors[l_value];
                 int l_byteStride = l_accessor.ByteStride(l_model.bufferViews[l_accessor.bufferView]);
-                glBindBuffer(GL_ARRAY_BUFFER, l_vbos[l_accessor.bufferView]);
+                glBindBuffer(GL_ARRAY_BUFFER, _buffers[l_accessor.bufferView]);
 
                 int l_size = 1;
                 if (l_accessor.type != TINYGLTF_TYPE_SCALAR) {
                     l_size = l_accessor.type;
                 }
 
-                const auto &l_result = vaa.find(l_name); // map.find tries to find a POSITION vector
-                if (l_result != vaa.end()) {
+                const auto &l_result = _vaa.find(l_name); // map.find tries to find a POSITION vector
+                if (l_result != _vaa.end()) {
                     glEnableVertexAttribArray(l_result->second);
                     glVertexAttribPointer(l_result->second, l_size, l_accessor.componentType,
                                           l_accessor.normalized ? GL_TRUE : GL_FALSE,
                                           l_byteStride, OFFSET(l_accessor.byteOffset));
                 } else {
-                    std::cerr << "[mesh] unsupported VAA: " << l_name << std::endl;
+                    std::cout << "[mesh] currently unsupported VAA: " << l_name << std::endl;
                 }
             }
 
@@ -109,10 +109,7 @@ namespace Ventgame {
         }
 
         glBindVertexArray(0);
-        for (auto &[l_key, l_value]: l_vbos) {
-            glDeleteBuffers(1, &l_value);
-            l_value = 0;
-        }
+
     }
 
 

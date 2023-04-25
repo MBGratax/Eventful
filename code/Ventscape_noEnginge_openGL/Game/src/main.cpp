@@ -15,7 +15,7 @@ int main() {
 
         namespace fs = std::filesystem;
 
-        auto l_assetPath = GET_DIR(DEBUG_ASSET_ROOT) / fs::path("assets");
+        auto l_assetPath = GET_DIR(DEBUG_ASSET_ROOT) / fs::path("Assets");
 
         l_assetPath = fs::canonical(l_assetPath).make_preferred();
 

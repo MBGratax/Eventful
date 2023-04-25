@@ -1,13 +1,13 @@
 # GameLab Project Repository
 
-|  General Info  | |
-| ---|---|
-| Working Title | Ventscape; Eventful Engine: Ventscoped |
-| Final Title | Ventscape; Eventful Engine: Ventscoped |
+|  General Info  |                                                                 |
+| ---|-----------------------------------------------------------------|
+| Working Title | Ventscape; Eventful Engine: Ventscap3d                          |
+| Final Title | Ventscape; Eventful Engine: Ventscap3d                          |
 | Student | Jonas Häfner, jonas.haefner@stud-mail.uni-wuerzburg.de, s370214 |
-| Target Platform(s) | Windows |
-| Start Date | 18.10.2021 |
-| Study Program | Games Engineering B.Sc.|
+| Target Platform(s) | Windows                                                         |
+| Start Date | 18.10.2022                                                      |
+| Study Program | Games Engineering B.Sc.                                         |
 
 ### Abstract
 
@@ -15,9 +15,9 @@
 
 Ventscaped is a 2D arcade endless runner where you try to achieve the high score while dodging obstacles and changing sides. The real fun comes in when more and more modifiers are added during gameplay that add functionality to an input such as rotating the camera when jumping or spawning an enemy when switching sides.    
 
-#### Eventful Engine: Ventscoped
+#### Eventful Engine: Ventscap3d
 
-The Eventful Engine is a 3D engine built around providing callbacks and events for virtually everything, allowing you to have each and every gameobject easily communicate with each other. Built with the Eventful Engine is the game Project Ventscoped - Ventscaped gone 3D with more movement options and inputs and even more challenging modifiers.
+The Eventful Engine is a 3D engine built around providing callbacks and events for virtually everything, allowing you to have each and every gameobject easily communicate with each other. Built with the Eventful Engine is the game Project Ventscap3d - Ventscaped gone 3D with more movement options and inputs and even more challenging modifiers.
 
 ## Repository Usage Guides
 

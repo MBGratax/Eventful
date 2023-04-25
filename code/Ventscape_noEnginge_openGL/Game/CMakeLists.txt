@@ -13,7 +13,9 @@ set(SOURCE_FILES
         src/physics/Listner.cpp
         src/physics/Listner.h
         src/physics/PhysicsWorld.cpp
-        src/physics/PhysicsWorld.h src/entities/PlayerCharacter.cpp src/entities/PlayerCharacter.h)
+        src/physics/PhysicsWorld.h
+        src/entities/PlayerCharacter.cpp
+        src/entities/PlayerCharacter.h src/Asset.h)
 
 set(EXE_FILE Ventscape)
 
@@ -21,13 +23,16 @@ add_executable(${EXE_FILE} ${SOURCE_FILES})
 
 target_compile_definitions(${EXE_FILE} PRIVATE $ENV{PREPROCESSORS})
 
-target_compile_features(${EXE_FILE} PRIVATE cxx_std_17)
+target_compile_features(${EXE_FILE} PRIVATE cxx_std_20)
 
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(glad CONFIG REQUIRED)
 find_package(portaudio CONFIG REQUIRED)
 find_package(box2d CONFIG REQUIRED)
+find_package(jsoncpp CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+find_package(imguizmo CONFIG REQUIRED)
 
 find_path(TINYGLTF_INCLUDE_DIRS "tiny_gltf.h")
 
@@ -39,7 +44,10 @@ target_link_libraries(${EXE_FILE}
         PRIVATE glfw
         PRIVATE glm::glm
         PRIVATE portaudio
-        PRIVATE box2d::box2d)
+        PRIVATE box2d::box2d
+        PRIVATE JsonCpp::JsonCpp
+        PRIVATE imgui::imgui
+        PRIVATE imguizmo::imguizmo)
 
 target_compile_definitions(${EXE_FILE} PRIVATE DEBUG_ASSET_ROOT=${PROJECT_SOURCE_DIR})
 
@@ -54,11 +62,10 @@ install(IMPORTED_RUNTIME_ARTIFACTS glfw portaudio
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib)
 
-set(LIBS $<TARGET_FILE:glad::glad> $<TARGET_FILE:box2d::box2d>)
+set(LIBS
+        $<TARGET_FILE:glad::glad>
+        $<TARGET_FILE:box2d::box2d>
+        $<TARGET_FILE:imgui::imgui>
+        $<TARGET_FILE:imguizmo::imguizmo>)
 
 install(FILES ${LIBS} DESTINATION lib)
-
-
-
-
-

@@ -16,14 +16,18 @@
       "installDir": "${sourceDir}/../../builds/Ventscape-${presetName}",
       "toolchainFile": "${sourceDir}/Extern/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "cacheVariables": {
+
       },
       "environment": {
         "CMAKE_BUILD_PARALLEL_LEVEL": "8",
-        "CXX_STANDARD": "17"
+        "CXX_STANDARD": "20"
       },
       "vendor": {
         "jetbrains.com/clion": {
           "toolchain": "Visual Studio"
+        },
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [ "Windows" ]
         }
       }
     },

@@ -7,7 +7,7 @@ namespace Ventgame {
     PlayerCharacter::PlayerCharacter(glm::vec3 position, float zRotation, float scale, glm::vec4 const &colour)
             : Entity(
             Shader("Shaders/FlatcolourVertexShader.glsl", "Shaders/FlatColourFragmentShader.glsl"),
-            Mesh("Meshes"),
+            Mesh("Meshes/Box.glb"),
             position,
             zRotation,
             scale,

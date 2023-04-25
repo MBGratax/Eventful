@@ -1,12 +1,13 @@
 #include "Shader.h"
 #include "../Game.h"
+#include "../Asset.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Ventgame {
 
-    std::string readText(const std::filesystem::path &fileName) {
-        std::ifstream l_sourceFile(fileName);
+    std::string Shader::ReadText(const std::filesystem::path &fileName) {
+        std::ifstream l_sourceFile(resolveAssetPath(fileName));
         std::stringstream l_buffer;
         l_buffer << l_sourceFile.rdbuf();
         return l_buffer.str();
@@ -18,10 +19,10 @@ namespace Ventgame {
         char s_infoLog[GL_INFO_LOG_LENGTH];
     };
 
-    unsigned int loadAndCompileShader(GLuint shaderType, const fs::path &shaderAssetPath) {
+    unsigned int Shader::LoadAndCompileShader(GLuint shaderType, const fs::path &shaderAssetPath) {
 
         unsigned int l_shader = glCreateShader(shaderType);
-        auto l_shaderSrc = readText(shaderAssetPath);
+        auto l_shaderSrc = ReadText(shaderAssetPath);
         const char *l_shaderSource = l_shaderSrc.c_str();
 
         glShaderSource(l_shader, 1, &l_shaderSource, nullptr);
@@ -47,8 +48,8 @@ namespace Ventgame {
 
     Shader::Shader(const fs::path &vertexShaderAsset, const fs::path &fragmentShaderAsset) {
 
-        _vertexShader = loadAndCompileShader(GL_VERTEX_SHADER, vertexShaderAsset);
-        _fragmentShader = loadAndCompileShader(GL_FRAGMENT_SHADER, fragmentShaderAsset);
+        _vertexShader = LoadAndCompileShader(GL_VERTEX_SHADER, vertexShaderAsset);
+        _fragmentShader = LoadAndCompileShader(GL_FRAGMENT_SHADER, fragmentShaderAsset);
 
         _shaderProgram = glCreateProgram();
         glAttachShader(_shaderProgram, _vertexShader);
