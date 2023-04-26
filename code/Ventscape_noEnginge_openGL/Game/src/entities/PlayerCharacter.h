@@ -22,6 +22,7 @@ namespace Ventgame {
 
     private:
         float _speed = 50.0f;
+        float _decayrate = 0.01f;
         float _jumpHeight = 10;
         b2Body* _hurtBox;
         bool _bIsAttacking = false;

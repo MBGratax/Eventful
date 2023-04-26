@@ -37,6 +37,7 @@
       "description": "Debug build using Ninja generator",
       "inherits": "Default",
       "cacheVariables": {
+        "CMAKE_CXX_FLAGS_DEBUG_INIT": "-fsanitize=address,undefined",
         "CMAKE_BUILD_TYPE": "Debug"
       },
       "environment": {

@@ -4,5 +4,6 @@ project(Ventscape_noEnginge_openGL)
 
 add_subdirectory(game)
 
-include(CPack)
 include(GoogleTest)
+include(InstallRequiredSystemLibraries)
+include(CPack)

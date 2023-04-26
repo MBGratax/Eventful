@@ -13,5 +13,9 @@
 *.swp
 *.idea
 /.idea
-/builds/*
-!/builds/*.zip
+
+# Ignore all files in the builds directory
+builds/*
+# But allow zip archives to be tracked
+!builds/*.zip
+

@@ -49,14 +49,15 @@ target_link_libraries(${EXE_FILE}
         PRIVATE imgui::imgui
         PRIVATE imguizmo::imguizmo)
 
-target_compile_definitions(${EXE_FILE} PRIVATE DEBUG_ASSET_ROOT=${PROJECT_SOURCE_DIR})
+target_compile_definitions(${EXE_FILE} PRIVATE DEBUG_ASSET_ROOT=${CMAKE_INSTALL_PREFIX})
 
 install(TARGETS ${EXE_FILE}
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib/static)
 
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/Assets DESTINATION Assets)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/Assets/Meshes DESTINATION Assets)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/Assets/Shaders DESTINATION Assets)
 
 install(IMPORTED_RUNTIME_ARTIFACTS glfw portaudio
         RUNTIME DESTINATION bin
