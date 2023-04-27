@@ -113,8 +113,8 @@ namespace Ventgame {
     void Game::Draw() {
 
         // Adjust viewport to actual window/frame buffer, not necessary equal to window size (retina!)
-        int l_width;
-        int l_height;
+        int l_width = 1920;
+        int l_height = 1080;
         glfwGetFramebufferSize(_glfWwindow, &l_width, &l_height);
         glViewport(0, 0, l_width, l_height);
 
