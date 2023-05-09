@@ -45,6 +45,8 @@ namespace Ventgame {
 
         auto &GetPhysicsWorld() { return _physicsWorld; }
 
+        const float &GetDifficulty() const { return _difficulty; }
+
     private:
         void Update();
 
@@ -59,6 +61,7 @@ namespace Ventgame {
         glm::mat4 _projection = glm::mat4(1.0f);
         int _viewPortWidth = 0;
         int _viewPortHeight = 0;
+        float _difficulty = 1.0f;
 
         std::vector<std::unique_ptr<Entity>> _entities;
 

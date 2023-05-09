@@ -69,7 +69,7 @@ namespace Ventgame {
 
     void Game::Run() {
         // Init Game Objects and add them to entity vector
-        _entities.push_back(std::make_unique<PlayerCharacter>(glm::vec3(0, 0, 0), 0, 1, glm::vec4(1, 0, 0, 1)));
+        _entities.push_back(std::make_unique<PlayerCharacter>(glm::vec3(0, 0, 0), 0, 1, glm::vec4(1, 0.3725, 0.1216, 1)));
         // Update Loop
         while (!glfwWindowShouldClose(_glfWwindow)) {
 

@@ -5,6 +5,10 @@
 
 namespace Ventgame {
 
+    std::ostream & operator<<(std::ostream & Str, PlayerInputData const & v) {
+        Str << "Jump Pressed: " << v.bJumpPressed << " Jump Released: " << v.bJumpReleased << " Attack Pressed: " << v.bAttackPressed << " Gravity Pressed: " << v.bGravityPressed;
+        return Str;
+    }
     PlayerCharacter::PlayerCharacter(glm::vec3 position, float zRotation, float scale, glm::vec4 const &colour)
             : Entity(
             Shader("Shaders/FlatcolourVertexShader.glsl", "Shaders/FlatColourFragmentShader.glsl"),
@@ -26,11 +30,17 @@ namespace Ventgame {
     }
 
     void PlayerCharacter::Update(Game *game, float deltaTime) {
-        /* TODO: Make player move upwards based on difficulty
-         * TODO: Make player jump based on button press duration
-         * TODO: Make player change gravity based on button press
-         * TODO: Make player attack based on button press
-         */
+
+        _difficulty = game->GetDifficulty();
+        PollInputs(game);
+        CheckAttack();
+
+        CalculateVerticalMovement();
+        CalculateJumpApexModifier();
+        CalculateHorizontalMovement();
+        CalculateJumpMovement();
+
+        MoveCharacter();
     }
 
     b2Body *
@@ -38,7 +48,7 @@ namespace Ventgame {
                                       PlayerCharacter const *playerCharacter) {
         b2BodyDef l_bodyDef;
         // User Data
-        l_bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(playerCharacter);
+        l_bodyDef.userData.pointer = std::bit_cast<uintptr_t>(playerCharacter);
         l_bodyDef.type = b2_dynamicBody;
         l_bodyDef.position = position;
         l_bodyDef.angle = angle;
@@ -64,5 +74,37 @@ namespace Ventgame {
         l_body->SetFixedRotation(true);
         return l_body;
 
+    }
+
+    void PlayerCharacter::PollInputs(Game const *game) {
+        GLFWwindow *l_window = game->GetWindow();
+        _polledInputData.bJumpPressed = glfwGetKey(l_window, GLFW_KEY_SPACE);
+        _polledInputData.bJumpReleased = !_polledInputData.bJumpPressed;
+        _polledInputData.bAttackPressed = glfwGetKey(l_window, GLFW_KEY_A);
+        _polledInputData.bGravityPressed = glfwGetKey(l_window, GLFW_KEY_D);
+    }
+
+    void PlayerCharacter::CheckAttack() {
+        // TODO: If Attack is pressed, and the player is not already attacking, activate hurtbox and perform attack for duration
+    }
+
+    void PlayerCharacter::CalculateVerticalMovement() {
+        // TODO: Move up with velocity, decrease with decayrate, update decayrate based on difficulty
+    }
+
+    void PlayerCharacter::CalculateJumpApexModifier() {
+        // TODO: Update jump apex based on current position to make the jump a nice and smooth curve
+    }
+
+    void PlayerCharacter::CalculateHorizontalMovement() {
+        // TODO: Make gravity calculations. Change gravity based on _bGravityIsLeft
+    }
+
+    void PlayerCharacter::CalculateJumpMovement() {
+        // TODO:Update jump related variables, such as coyote time
+    }
+
+    void PlayerCharacter::MoveCharacter() {
+        // TODO: Based on previous calculations, attempt to move character to appropriate position based on collision
     }
 }
