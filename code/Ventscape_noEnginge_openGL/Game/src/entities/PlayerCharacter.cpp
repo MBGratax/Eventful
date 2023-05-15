@@ -85,6 +85,9 @@ namespace Ventgame {
     }
 
     void PlayerCharacter::CheckAttack() {
+        if(_polledInputData.bAttackPressed && !_bIsAttacking) {
+            _bIsAttacking = true;
+        }
         // TODO: If Attack is pressed, and the player is not already attacking, activate hurtbox and perform attack for duration
     }
 
