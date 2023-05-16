@@ -17,11 +17,11 @@
 #include <box2d/box2d.h>
 
 #include "entities/Entity.h"
+#include "entities/PlayerCharacter.h"
 #include "physics/PhysicsWorld.h"
 
 namespace Ventgame {
     namespace fs = std::filesystem;
-
     class Game {
     public:
         explicit Game(fs::path assetRoot = "./assets", int width = 800, int height = 600,
@@ -67,8 +67,10 @@ namespace Ventgame {
 
         std::filesystem::path _assetRoot;
 
-        Physics::PhysicsWorld *_physicsWorld = Physics::PhysicsWorld::GetInstance();
+        Physics::PhysicsWorld& _physicsWorld = Physics::PhysicsWorld::GetInstance();
         b2Body *_groundBody = nullptr;
+
+        PlayerCharacter* _playerCharacter;
 
     };
 }

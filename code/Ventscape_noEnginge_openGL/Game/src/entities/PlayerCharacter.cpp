@@ -52,7 +52,7 @@ namespace Ventgame {
         l_bodyDef.type = b2_dynamicBody;
         l_bodyDef.position = position;
         l_bodyDef.angle = angle;
-        b2Body *l_body = Physics::PhysicsWorld::GetInstance()->CreateBody(l_bodyDef);
+        b2Body *l_body = Physics::PhysicsWorld::GetInstance().CreateBody(l_bodyDef);
         b2Vec2 l_vertices[6];
         l_vertices[0].Set(0.5f, 0.025f);
         l_vertices[1].Set(0.0f, 0.3f);

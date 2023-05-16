@@ -1,17 +1,11 @@
 
 #include "PhysicsWorld.h"
+#include <iostream>
 
 namespace Ventgame::Physics {
 
     b2Body *PhysicsWorld::CreateBody(const b2BodyDef &bodyDef) {
         return _b2->CreateBody(&bodyDef);
-    }
-
-    PhysicsWorld *PhysicsWorld::GetInstance() {
-        if (_instance == nullptr) {
-            _instance = new PhysicsWorld();
-        }
-        return _instance;
     }
 
     PhysicsWorld::PhysicsWorld() {

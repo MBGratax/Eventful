@@ -12,7 +12,10 @@ namespace Ventgame::Physics {
 
         void operator=(const PhysicsWorld &) = delete;
 
-        static PhysicsWorld *GetInstance();
+        static PhysicsWorld& GetInstance(){
+            static PhysicsWorld _instance;
+            return _instance;
+        }
 
         b2Body *CreateBody(const b2BodyDef &bodyDef);
 
@@ -23,8 +26,6 @@ namespace Ventgame::Physics {
         PhysicsWorld();
 
     private:
-
-        inline static PhysicsWorld *_instance = nullptr;
         std::unique_ptr<b2World> _b2;
         b2Vec2 _gravity{0.0f, 0.0f};
         Listner _listenerInstance;

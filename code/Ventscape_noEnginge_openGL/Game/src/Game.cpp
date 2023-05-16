@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "entities/PlayerCharacter.h"
 
 #include <glm/gtx/transform.hpp>
 
@@ -17,6 +16,7 @@ namespace Ventgame {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_SAMPLES, 8); // 8x antialiasing
 
         // Create a windowed mode window and its OpenGL context
         _glfWwindow = glfwCreateWindow(width, height, title, nullptr, nullptr);
@@ -45,6 +45,7 @@ namespace Ventgame {
                   << "opengl version: " << glGetString(GL_VERSION) << std::endl;
 
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_MULTISAMPLE);
 
         if (glGetError() != GL_NO_ERROR) {
             throw std::runtime_error("gl error");
@@ -53,14 +54,6 @@ namespace Ventgame {
         // Frame time (initialize to sane values)
         glfwSetTime(1.0 / 60);
 
-        _physicsWorld = Physics::PhysicsWorld::GetInstance();
-        b2BodyDef l_groundBodyDef;
-        l_groundBodyDef.position.Set(-50.0f, -10.0f);
-        _groundBody = _physicsWorld->CreateBody(l_groundBodyDef);
-
-        b2PolygonShape l_groundBox;
-        l_groundBox.SetAsBox(100.0f, 1.0f);
-        _groundBody->CreateFixture(&l_groundBox, 0.0f);
     }
 
     Game::~Game() {
@@ -69,7 +62,9 @@ namespace Ventgame {
 
     void Game::Run() {
         // Init Game Objects and add them to entity vector
-        _entities.push_back(std::make_unique<PlayerCharacter>(glm::vec3(0, 0, 0), 0, 1, glm::vec4(1, 0.3725, 0.1216, 1)));
+        auto l_playerCharacter = std::make_unique<PlayerCharacter>(glm::vec3(0, 0, 0), 0, 1, glm::vec4(1, 0.3725, 0.1216, 1));
+        _playerCharacter = l_playerCharacter.get();
+        _entities.push_back(std::move(l_playerCharacter));
         // Update Loop
         while (!glfwWindowShouldClose(_glfWwindow)) {
 
@@ -107,7 +102,7 @@ namespace Ventgame {
     }
 
     void Game::PhysicsUpdate() {
-        _physicsWorld->Step();
+        _physicsWorld.Step();
     }
 
     void Game::Draw() {
@@ -123,13 +118,14 @@ namespace Ventgame {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Setup shader transformations
-        _view = glm::lookAt(glm::vec3(0.0f, 0.0f, 15.0f),
-                            glm::vec3(0.0f, 0.0f, 0.0f),
-                            glm::vec3(0.0f, 1.0f, 0.0f));
+        auto l_position = _playerCharacter->GetBody()->GetPosition();
+        _view = glm::lookAt(glm::vec3(l_position.x, l_position.y + 15.0f, 0.0f),
+                            glm::vec3(l_position.x, l_position.y, 0.0f) + glm::normalize(glm::vec3(cos(glm::radians(60.0f)), 0.0f, sin(glm::radians(60.0f)))),
+                            glm::vec3(0.0f, 0.0f, 1.0f));
 
 
-        _projection = glm::perspective(glm::radians(15.0f), (float) _viewPortWidth / (float) _viewPortHeight, 0.1f,
-                                       100.0f);
+        _projection = glm::perspective(glm::radians(90.0f), (float) _viewPortWidth / (float) _viewPortHeight, 0.1f,
+                                       200.0f);
 
         // Draw objects
         for (const auto &l_e: _entities) {
