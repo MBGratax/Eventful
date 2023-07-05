@@ -36,7 +36,6 @@
       "description": "Debug build using Ninja generator",
       "inherits": "Default",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS_DEBUG_INIT": "-fsanitize=address,undefined",
         "CMAKE_BUILD_TYPE": "Debug"
       },
       "environment": {
@@ -71,11 +70,10 @@
   ],
   "buildPresets": [
     {
-      "name": "Default",
-      "displayName": "Default Build",
-      "hidden": true,
-      "description": "Default build using Ninja generator",
-      "configurePreset": "Default",
+      "name": "Debug-Build",
+      "displayName": "Debug Build",
+      "description": "Debug build using Ninja generator",
+      "configurePreset": "Debug",
       "vendor": {
         "jetbrains.com/clion": {
           "toolchain": "Visual Studio"
@@ -85,25 +83,30 @@
       "cleanFirst": true
     },
     {
-      "name": "Debug",
-      "displayName": "Debug Build",
-      "description": "Debug build using Ninja generator",
-      "inherits": "Default",
-      "configurePreset": "Debug"
-    },
-    {
-      "name": "Release",
+      "name": "Release-Build",
       "displayName": "Release Build",
       "description": "Release build using Ninja generator",
-      "inherits": "Default",
-      "configurePreset": "Release"
+      "configurePreset": "Release",
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "Visual Studio"
+        }
+      },
+      "jobs": 8,
+      "cleanFirst": true
     },
     {
-      "name": "ReleaseWithLogs",
+      "name": "ReleaseWithLogs-Build",
       "displayName": "RelWithDebugInfo Build",
       "description": "Release build with logs using Ninja generator",
-      "inherits": "Default",
-      "configurePreset": "ReleaseWithLogs"
+      "configurePreset": "ReleaseWithLogs",
+      "vendor": {
+        "jetbrains.com/clion": {
+          "toolchain": "Visual Studio"
+        }
+      },
+      "jobs": 8,
+      "cleanFirst": true
     }
   ]
 }
