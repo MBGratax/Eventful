@@ -47,8 +47,8 @@
       "name": "Release",
       "displayName": "Release Config",
       "description": "Release build using Ninja generator",
-      "inherits": "Default",
       "installDir": "${sourceDir}/../../builds/Ventscape",
+      "inherits": "Default",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "MinSizeRel"
       },

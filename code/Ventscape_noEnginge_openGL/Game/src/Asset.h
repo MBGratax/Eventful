@@ -9,7 +9,13 @@ namespace fs = std::filesystem;
 
 namespace Ventgame {
     inline fs::path resolveAssetPath(const fs::path &relativeAssetPath) {
-        auto l_mergedPath = (fs::current_path() / fs::path("Assets") / relativeAssetPath).make_preferred();
+        fs::path l_root;
+#if(NDEBUG)
+        l_root = fs::current_path();
+#else
+        l_root = GET_DIR(DEBUG_ASSET_ROOT);
+#endif
+        auto l_mergedPath = (l_root / fs::path("Assets") / relativeAssetPath).make_preferred();
         return fs::canonical(l_mergedPath);
     }
 }
