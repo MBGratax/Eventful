@@ -2,10 +2,12 @@
 #include "../Game.h"
 #include "../Asset.h"
 
+#ifndef TINYGLTF_IMPLEMENTATION
 #define TINYGLTF_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #define STBI_MSC_SECURE_CRT
+#endif
 
 #include "tiny_gltf.h"
 

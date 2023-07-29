@@ -72,10 +72,10 @@ set(LIBS
 install(FILES ${LIBS} DESTINATION lib)
 
 # Specify the package generator and format
-set(CPACK_GENERATOR ZIP)
+set(CPACK_GENERATOR "ZIP")
 set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}-Win64")
 
-# Specify any dependencies, runtime libraries, or other details
+set(CPACK_PACKAGE_NAME "Ventscaped")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A simple endless platformer in openGL")
 set(CPACK_PACKAGE_VENDOR "Jonas Haefner")
 #set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
