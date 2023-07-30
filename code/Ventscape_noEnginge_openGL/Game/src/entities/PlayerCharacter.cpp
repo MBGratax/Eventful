@@ -92,7 +92,29 @@ namespace Ventgame {
     }
 
     void PlayerCharacter::CalculateVerticalMovement() {
-        // TODO: Move up with velocity, decrease with decayrate, update decayrate based on difficulty
+        if (_polledInputData.xAxis != 0)
+        {
+            // Set Vertical Speed
+            _currentVerticalSpeed += polledInput.xAxis * acceleration * deltaTime;
+
+            // Clamped by max movement per frame
+            _currentVerticalSpeed = std::clamp(_currentVerticalSpeed, -_moveClamp, _moveClamp);
+
+            // Apply Apex modifier
+            float apexBonus = std::copysign(_apexModifier * _apexPoint, polledInput.xAxis);
+            _currentVerticalSpeed += apexBonus * deltaTime;
+        }
+        else
+        {
+            // No Horizontal input, slow character down
+            _currentVerticalSpeed = std::moveTowards(_currentVerticalSpeed, 0, deacceleration * deltaTime);
+        }
+
+        if (_currentVerticalSpeed > 0 && _bIsCollidingRight || _currentVerticalSpeed < 0 && _bIsCollidingLeft)
+        {
+            // Do not run through walls
+            _currentHorizontalSpeed = 0;
+        }
     }
 
     void PlayerCharacter::CalculateJumpApexModifier() {

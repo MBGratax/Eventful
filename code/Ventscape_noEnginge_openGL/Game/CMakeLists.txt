@@ -15,7 +15,9 @@ set(SOURCE_FILES
         src/physics/PhysicsWorld.cpp
         src/physics/PhysicsWorld.h
         src/entities/PlayerCharacter.cpp
-        src/entities/PlayerCharacter.h src/Asset.h)
+        src/entities/PlayerCharacter.h
+        src/Asset.h
+        src/TimeStep.h)
 
 set(EXE_FILE Ventscape)
 

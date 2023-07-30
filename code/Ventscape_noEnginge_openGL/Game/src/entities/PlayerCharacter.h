@@ -28,15 +28,6 @@ namespace Ventgame {
         static b2Body *CreatePlayerBody(b2Vec2 position, float size, float angle, PlayerCharacter const *playerCharacter);
     private:
         void PollInputs(Game const *game);
-    private:
-        PlayerInputData _polledInputData;
-        float _speed = 50.0f;
-        float _decayrate = 0.01f;
-        float _jumpHeight = 10;
-        b2Body* _hurtBox;
-        bool _bIsAttacking = false;
-        bool _bIsGrounded = false;
-        bool _bIsGravityLeft = true;
 
         void CheckAttack();
 
@@ -50,8 +41,43 @@ namespace Ventgame {
 
         void MoveCharacter();
 
-        float _difficulty;
+        bool BCanUseCoyote() const{_bIsCoyoteTimeUsable && !_bIsCollidingDown && _timeLeftGrounded + _coyoteTimeThreshold > Time.time;};
+
+        bool _bIsActive {true};
+#pragma region Movement
+        PlayerInputData _polledInputData {};
+        float _difficulty {};
+        float _currentVerticalSpeed {};
+        b2Vec2 _lastPosition {};
+        float _speed {50.0f};
+        float _decayRate {0.01f};
+#pragma endregion
+#pragma region Groundchecks
+        bool _bIsGrounded {false};
+        bool _bIsCollidingDown {false};
+        float _timeLeftGrounded {};
+#pragma endregion
+#pragma region Jumping
+        float _jumpHeight {10.0f};
+        float _currentHorizontalSpeed {};
+        bool _bIsCoyoteTimeUsable {true};
+        bool _bHasEndedJumpEarly {false};
+        float _apexPoint {};
+        float _lastJumpPressed {};
+        float _jumpApexThreshold {10.0f};
+        float _coyoteTimeThreshold {0.1f};
+        float _jumpBuffer {0.1f};
+        float _jumpEndEarlyGravityModifier {3.0f};
+#pragma endregion
+#pragma region Falling
+        bool _bIsGravityLeft {true};
+        float _minFallSpeed {80.0f};
+        float _fallClamp {40.0f};
+        float _maxFallSpeed {120.0f};
+#pragma endregion
+#pragma region Attack
+        bool _bIsAttacking {false};
+        b2Body* _hurtBox {};
+#pragma endregion
     };
-
 }
-
